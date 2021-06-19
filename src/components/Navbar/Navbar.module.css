@@ -1,0 +1,151 @@
+.widthFull {
+  width: 100%;
+}
+
+.spaceHr {
+  width: 1rem;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+/* .flexJustify {
+  justify-content: flex;
+} */
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style-type: none;
+}
+
+.navContainer {
+  width: 100px;
+  overflow: hidden;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+.navOuter {
+  display: flex;
+  align-items: center;
+  height: 4rem;
+  background-color: var(--light-blue-500);
+  margin-bottom: 1rem;
+}
+
+.logoContainer {
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  height: 100%;
+}
+
+.logoImage {
+  max-height: 3.25rem;
+  height: 100%;
+}
+
+.logoText {
+  font-size: 1.25rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.iconBadge {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+.navIcon {
+  margin-top: 0.5rem;
+  margin-right: 0.25rem;
+  font-size: 1.5rem;
+}
+
+.mobileMenu {
+  display: block;
+  margin-left: auto;
+}
+
+.menuDrawer {
+  background-color: #ffffffff;
+  padding: 0 2rem;
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  /* bottom: 0rem; */
+  /* height: 100%; */
+  max-height: 0px;
+  width: 100%;
+  overflow: hidden;
+  z-index: 5;
+  /* opacity: 0; */
+  transition: all 0.5s ease;
+}
+
+.menuDrawer li {
+  width: 100%;
+  text-align: center;
+}
+
+.menuLink {
+  display: block;
+  width: 100%;
+  padding: 1rem 0;
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+.menuDrawerActive {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.desktopMenu {
+  display: none;
+  margin-left: auto;
+}
+
+.modalOuter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modalInner {
+  background-color: var(--color-background-2);
+  margin: 0 1rem;
+  padding: 1rem 2rem;
+  max-width: 40rem;
+}
+
+@media screen and (min-width: 640px) {
+  .mobileMenu {
+    display: none;
+  }
+  .desktopMenu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}

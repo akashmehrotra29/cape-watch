@@ -4,9 +4,16 @@ import "./styles.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+import { VideosProvider } from "./contexts";
+import { BrowserRouter as Router } from "react-router-dom";
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <VideosProvider>
+      <Router>
+        <App />
+      </Router>
+    </VideosProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
