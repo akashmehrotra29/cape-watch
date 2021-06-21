@@ -9,7 +9,7 @@ export const Playlists = () => {
       <h1> Playlists </h1>
       {playlists &&
         playlists.map((playlist) => (
-          <div key={playlist.id}>
+          <div key={playlist._id}>
             <div className={`${styles.height2R}`}></div>
             <PlaylistBrief playlist={playlist} />
           </div>

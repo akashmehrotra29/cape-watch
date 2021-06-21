@@ -5,14 +5,9 @@ import styles from "./VideoCard.module.css";
 
 export const VideoCard = ({ videoId }) => {
   const { videos } = useVideos();
-  const {
-    id,
-    thumbnailURL,
-    channelName,
-    published_date,
-    title,
-    statistics: { viewCount }
-  } = getVideoDetailsById(videoId, videos);
+
+  const { id, thumbnailURL, channelName, published_date, title, viewCount } =
+    getVideoDetailsById(videoId, videos);
 
   return (
     <Link className={`${styles.link}`} to={`/video/${id}`}>

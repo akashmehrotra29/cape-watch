@@ -4,3 +4,6 @@ export { VideoActionButtons } from "./VideoActionButtons/VideoActionButtons";
 export { PlaylistBrief } from "./PlaylistBrief/PlaylistBrief";
 export { VideoBriefCard } from "./VideoBriefCard/VideoBriefCard";
 export { DeleteModal } from "./DeleteModal/DeleteModal";
+export { LogoutModal } from "./LogoutModal/LogoutModal";
+export { AuthModal } from "./AuthModal/AuthModal";
+export { Loader } from "./Loader/Loader";

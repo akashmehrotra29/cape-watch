@@ -1,12 +1,28 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts";
+import { LogoutModal } from "../";
 import styles from "./Navbar.module.css";
 
 export const Navbar = () => {
   const [showMenuDrawer, setShowMenuDrawer] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { user } = useAuth();
+
+  const authHandler = () => {
+    user
+      ? setShowLogoutModal(true)
+      : navigate("/login", { state: { from: pathname } });
+  };
 
   return (
     <div className={`${styles.navOuter}`}>
+      {showLogoutModal && (
+        <LogoutModal setShowLogoutModal={setShowLogoutModal} />
+      )}
       <div className={` ${styles.flexRow} ${styles.widthFull}`}>
         <Link to="/" className={`${styles.logoContainer} ${styles.link}`}>
           <span className={styles.logoText}>Home</span>
@@ -16,18 +32,29 @@ export const Navbar = () => {
           className={`${styles.desktopMenu} ${styles.link} ${styles.widthFull}`}
         >
           <Link className={`${styles.link}`} to="/">
-            Home
+            Videos
           </Link>
           <div className={`${styles.spaceHr}`}></div>
           <Link className={`${styles.link}`} to="/playlists">
             Playlists
           </Link>
           <div className={`${styles.spaceHr}`}></div>
-          <Link className={`${styles.link}`} to="/account">
-            Account
-          </Link>
+
+          {user && (
+            <div>
+              <Link className={`${styles.link}`} to="/account">
+                Account
+              </Link>
+            </div>
+          )}
+
+          <div className={`${styles.spaceHr}`}></div>
+          <div className={`${styles.link}`} onClick={authHandler}>
+            {user ? "Logout" : "Login"}
+          </div>
           <div className={`${styles.spaceHr}`}></div>
         </div>
+
         <div className={`${styles.mobileMenu}`}>
           <button
             onClick={() => setShowMenuDrawer((val) => !val)}
@@ -53,9 +80,16 @@ export const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link className={`${styles.menuLink}`} to="/account">
-                  Account
-                </Link>
+                {user && (
+                  <Link className={`${styles.menuLink}`} to="/account">
+                    Account
+                  </Link>
+                )}
+              </li>
+              <li>
+                <div className={`${styles.menuLink}`} onClick={authHandler}>
+                  {user ? "Logout" : "Login"}
+                </div>
               </li>
             </ul>
           </div>

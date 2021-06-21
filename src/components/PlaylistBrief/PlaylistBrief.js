@@ -7,13 +7,13 @@ export const PlaylistBrief = ({ playlist }) => {
     <div>
       <div className="horizontal-card-center">
         <div className="horizontal-card">
-          <Link to={`/playlists/${playlist.id}`} className={`${styles.link}`}>
+          <Link to={`/playlists/${playlist._id}`} className={`${styles.link}`}>
             <div className="thumbnail">
               {playlist.videos.length !== 0 &&
                 playlist.videos
                   .slice(-1)
-                  .map((playlistId) => (
-                    <VideoBriefCard key={playlistId} playlistId={playlistId} />
+                  .map((videoId) => (
+                    <VideoBriefCard key={videoId} videoId={videoId} />
                   ))}{" "}
             </div>
             <div className="product-description">

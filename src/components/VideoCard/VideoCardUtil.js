@@ -1,2 +1,2 @@
 export const getVideoDetailsById = (videoId, videos) =>
-  videos.find((video) => video.id === videoId);
+  videos.find((video) => video._id === videoId);

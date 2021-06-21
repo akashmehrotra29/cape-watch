@@ -1,17 +1,27 @@
 import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { useVideos } from "../../contexts/videos-context";
-import { VideoActionButtons } from "../../components";
+import { PlaylistBrief, VideoActionButtons } from "../../components";
 import { addToHistory } from "./VideoDetailsUtil";
 import styles from "./VideoDetails.module.css";
+import { useAuth } from "../../contexts";
+import { Loader } from "../../components";
 
 export const VideoDetails = () => {
-  const { videos, dispatch } = useVideos();
+  const { videos, playlists, dispatch } = useVideos();
   const { videoId } = useParams();
+  const { user } = useAuth();
 
   const video = videos.find((video) => video.id === videoId);
+  const watchedVideosPlaylist = playlists.find(
+    (playlist) => playlist.name === "Watched Videos"
+  );
 
-  return (
+  const isUserDataLoaded = user
+    ? videos.length && playlists.length
+    : videos.length;
+
+  return isUserDataLoaded ? (
     <div>
       {video && (
         <div className={`${styles.container}`}>
@@ -22,7 +32,9 @@ export const VideoDetails = () => {
               height="100%"
               controls
               pip
-              onPlay={() => addToHistory("watched", video, dispatch)}
+              onPlay={() =>
+                addToHistory(watchedVideosPlaylist._id, video, dispatch)
+              }
             />
           </div>
 
@@ -51,5 +63,7 @@ export const VideoDetails = () => {
         </div>
       )}
     </div>
+  ) : (
+    <Loader />
   );
 };

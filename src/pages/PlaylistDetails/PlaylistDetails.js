@@ -1,34 +1,34 @@
 import { useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useVideos } from "../../contexts";
-import { VideoCard, DeleteModal } from "../../components";
+import { VideoCard, DeleteModal, Loader } from "../../components";
 import {
   getPlaylistById,
   editButtonHandler,
   findIsDefaultPlaylist,
-  findIsWatchedPlaylist
 } from "./PlaylistDetailsUtil";
 import styles from "./PlaylistDetails.module.css";
 
 export const PlaylistDetails = () => {
   const { playlistId } = useParams();
   const { playlists, dispatch } = useVideos();
+
   const playlist = getPlaylistById(playlistId, playlists);
+
   const [showDeleteModal, setshowDeleteModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [playlistName, setPlaylistName] = useState(playlist.name);
+  const [playlistName, setPlaylistName] = useState(playlist?.name);
   const playlistNameRef = useRef(null);
 
-  const isDefaultPlaylist = findIsDefaultPlaylist(playlistId);
+  const isDefaultPlaylist = findIsDefaultPlaylist(playlistName);
 
-  const isWatchedPlaylist = findIsWatchedPlaylist(playlistId);
-
-  return (
+  return playlist ? (
     <div>
       {showDeleteModal && (
         <DeleteModal
           setshowDeleteModal={setshowDeleteModal}
           playlistId={playlistId}
+          playlistName={playlistName}
         />
       )}
       <input
@@ -48,7 +48,8 @@ export const PlaylistDetails = () => {
                 playlistNameRef,
                 playlist,
                 playlistName,
-                dispatch
+                dispatch,
+                playlistId
               )
             }
           >
@@ -82,5 +83,7 @@ export const PlaylistDetails = () => {
         )}
       </ul>
     </div>
+  ) : (
+    <Loader />
   );
 };

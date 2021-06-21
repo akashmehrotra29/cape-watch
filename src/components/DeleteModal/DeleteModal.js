@@ -3,11 +3,15 @@ import { useVideos } from "../../contexts";
 import { deletePlaylist, findIsDefaultPlaylist } from "./DeleteModalUtil";
 import styles from "./DeleteModal.module.css";
 
-export const DeleteModal = ({ setshowDeleteModal, playlistId }) => {
+export const DeleteModal = ({
+  setshowDeleteModal,
+  playlistId,
+  playlistName,
+}) => {
   const { dispatch } = useVideos();
   const navigate = useNavigate();
 
-  const isDefaultPlaylist = findIsDefaultPlaylist(playlistId);
+  const isDefaultPlaylist = findIsDefaultPlaylist(playlistName);
 
   const modalTitle = "Are you sure?";
   const modalText = isDefaultPlaylist
@@ -28,7 +32,13 @@ export const DeleteModal = ({ setshowDeleteModal, playlistId }) => {
           </button>
           <button
             onClick={() =>
-              deletePlaylist(navigate, dispatch, playlistId, setshowDeleteModal)
+              deletePlaylist(
+                navigate,
+                dispatch,
+                playlistId,
+                playlistName,
+                setshowDeleteModal
+              )
             }
             className="btn btn-solid btn-small"
           >

@@ -1,123 +1,178 @@
 import { useState } from "react";
-import { useVideos } from "../../contexts";
+import { useAuth, useVideos } from "../../contexts";
 import styles from "./VideoActionButtons.module.css";
+import { AuthModal } from "../";
 
 import {
-  toggleInPlaylist,
-  isInPlaylist,
-  createNewPlaylist
+  toggleIsInPlaylist,
+  createNewPlaylist,
+  getPlaylistByName,
+  isInPlaylistByName,
+  isInPlaylistById,
+  togglePlaylistMenu,
 } from "./VideoActionButtonsUtil";
 
 export const VideoActionButtons = ({ video }) => {
   const [viewPlaylistMenu, setViewPlaylistMenu] = useState(false);
   const [newPlaylist, setNewPlaylist] = useState("");
   const { playlists, dispatch } = useVideos();
-
-  const togglePlaylistMenu = () => {
-    setViewPlaylistMenu((prev) => !prev);
-  };
+  const { user } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   return (
-    <div className={`${styles.buttonsWrap}`}>
-      <span>
-        <button
-          className="btn btn-round"
-          onClick={() => toggleInPlaylist("saved", video, dispatch)}
-        >
-          <span className={`material-icons-round`}>
-            {isInPlaylist("saved", video, playlists)
-              ? "bookmark"
-              : "bookmark_border"}
-          </span>
-        </button>
-      </span>{" "}
-      <span>
-        <button
-          className="btn btn-round"
-          onClick={() => toggleInPlaylist("liked", video, dispatch)}
-        >
-          <span className={`material-icons-round`}>
-            {isInPlaylist("liked", video, playlists)
-              ? "favorite"
-              : "favorite_border"}
-          </span>
-        </button>
-      </span>{" "}
-      <span>
-        <button
-          className="btn btn-round"
-          onClick={() => toggleInPlaylist("watch-later", video, dispatch)}
-        >
-          <span
-            className={`${
-              isInPlaylist("watch-later", video, playlists)
-                ? "material-icons"
-                : "material-icons-outlined"
-            }`}
+    <div>
+      {showAuthModal && (
+        <AuthModal setShowAuthModal={setShowAuthModal} dispatch={dispatch} />
+      )}
+      <div className={`${styles.buttonsWrap}`}>
+        <span>
+          <button
+            className="btn btn-round"
+            onClick={() =>
+              toggleIsInPlaylist(
+                getPlaylistByName("Saved Videos", playlists)._id,
+                video,
+                dispatch,
+                user,
+                setShowAuthModal
+              )
+            }
           >
-            watch_later
-          </span>
-        </button>
-      </span>{" "}
-      <div>
-        <button className="btn btn-round" onClick={togglePlaylistMenu}>
-          <span className={`material-icons-round`}>playlist_add</span>
-        </button>
+            <span className={`material-icons-round`}>
+              {isInPlaylistByName("Saved Videos", video, playlists)
+                ? "bookmark"
+                : "bookmark_border"}
+            </span>
+          </button>
+        </span>
+        <span>
+          <button
+            className="btn btn-round"
+            onClick={() =>
+              toggleIsInPlaylist(
+                getPlaylistByName("Liked Videos", playlists)._id,
+                video,
+                dispatch,
+                user,
+                setShowAuthModal
+              )
+            }
+          >
+            <span className={`material-icons-round`}>
+              {isInPlaylistByName("Liked Videos", video, playlists)
+                ? "favorite"
+                : "favorite_border"}
+            </span>
+          </button>
+        </span>{" "}
+        <span>
+          <button
+            className="btn btn-round"
+            onClick={() =>
+              toggleIsInPlaylist(
+                getPlaylistByName("Watch Later Videos", playlists)._id,
+                video,
+                dispatch,
+                user,
+                setShowAuthModal
+              )
+            }
+          >
+            <span
+              className={`${
+                isInPlaylistByName("Watch Later Videos", video, playlists)
+                  ? "material-icons"
+                  : "material-icons-outlined"
+              }`}
+            >
+              watch_later
+            </span>
+          </button>
+        </span>{" "}
+        <div>
+          <button
+            className="btn btn-round"
+            onClick={() =>
+              togglePlaylistMenu(user, setViewPlaylistMenu, setShowAuthModal)
+            }
+          >
+            <span className={`material-icons-round`}>playlist_add</span>
+          </button>
 
-        {viewPlaylistMenu && (
-          <div>
-            <ul className={`${styles.list}`}>
-              {playlists &&
-                playlists.map((playlist, idx) => (
-                  <li key={playlist.id}>
-                    <input
-                      type="checkbox"
-                      checked={isInPlaylist(playlist.id, video, playlists)} // useref
-                      onChange={() =>
-                        toggleInPlaylist(playlist.id, video, dispatch)
-                      }
-                    />
-                    <span>{playlist.name}</span>
-                  </li>
-                ))}
-              <li className={`${styles.playlistMenuItem} ${styles.flexCenter}`}>
-                <form
-                  className={`${styles.flexCenter}`}
-                  onSubmit={(event) =>
-                    createNewPlaylist(
-                      event,
-                      newPlaylist,
-                      setNewPlaylist,
-                      playlists,
-                      video,
-                      dispatch
-                    )
-                  }
+          {viewPlaylistMenu && (
+            <div>
+              <ul className={`${styles.list}`}>
+                {playlists &&
+                  playlists.map((playlist, idx) => (
+                    <li key={playlist._id}>
+                      <input
+                        type="checkbox"
+                        checked={isInPlaylistById(
+                          playlist._id,
+                          video,
+                          playlists
+                        )} // useref
+                        onChange={() =>
+                          toggleIsInPlaylist(
+                            playlist.id,
+                            video,
+                            dispatch,
+                            user,
+                            setShowAuthModal
+                          )
+                        }
+                      />
+                      <span>{playlist.name}</span>
+                    </li>
+                  ))}
+                <li
+                  className={`${styles.playlistMenuItem} ${styles.flexCenter}`}
                 >
-                  <input
-                    className={`${styles.newPlaylistInput} ${styles.input}`}
-                    value={newPlaylist}
-                    onChange={(event) =>
-                      setNewPlaylist(() => event.target.value)
+                  <form
+                    className={`${styles.flexCenter}`}
+                    onSubmit={(event) =>
+                      createNewPlaylist(
+                        event,
+                        newPlaylist,
+                        setNewPlaylist,
+                        playlists,
+                        video,
+                        dispatch,
+                        user
+                      )
                     }
-                    type="text"
-                  />
-                  <button>
-                    <span className={`material-icons-outlined`}>add</span>
+                  >
+                    <input
+                      className={`${styles.newPlaylistInput} ${styles.input}`}
+                      value={newPlaylist}
+                      onChange={(event) =>
+                        setNewPlaylist(() => event.target.value)
+                      }
+                      type="text"
+                    />
+                    <button>
+                      <span className={`material-icons-outlined`}>add</span>
+                    </button>
+                  </form>
+                </li>
+                <li>
+                  <button
+                    onClick={() =>
+                      togglePlaylistMenu(
+                        user,
+                        setViewPlaylistMenu,
+                        setShowAuthModal
+                      )
+                    }
+                    className="btn btn-primary"
+                  >
+                    add to playlist
                   </button>
-                </form>
-              </li>
-              <li>
-                <button
-                  onClick={togglePlaylistMenu}
-                  className="btn btn-primary"
-                >
-                  add to playlist
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
-import { v4 } from "uuid";
 export const videosReducer = (state, { type, payload }) => {
   switch (type) {
     case "LOAD_VIDEOS":
       return { ...state, videos: payload };
+
+    case "LOAD_PLAYLISTS":
+      return { ...state, playlists: payload };
 
     case "ADD_TO_HISTORY":
       const watchedPlaylist = findCurrentPlaylist(state, payload);
@@ -14,10 +16,10 @@ export const videosReducer = (state, { type, payload }) => {
         return {
           ...state,
           playlists: state.playlists.map((playlist) =>
-            playlist.id === payload.playlistId
+            playlist._id === payload.playlistId
               ? { ...playlist, videos: [...playlist.videos, payload.videoId] }
               : playlist
-          )
+          ),
         };
       }
       return state;
@@ -37,36 +39,46 @@ export const videosReducer = (state, { type, payload }) => {
         ...state,
         playlists: [
           ...state.playlists,
-          { name: payload.playlistName, id: v4(), videos: [payload.videoId] }
-        ]
+          {
+            name: payload.playlistName,
+            _id: payload._id,
+            videos: [payload.videoId],
+          },
+        ],
       };
 
     case "UPDATE_PLAYLIST_NAME":
       return {
         ...state,
         playlists: state.playlists.map((playlistItem) =>
-          playlistItem.id === payload.id
+          playlistItem._id === payload._id
             ? { ...playlistItem, name: payload.name }
             : playlistItem
-        )
+        ),
       };
 
     case "DELETE_PLAYLIST":
       return {
         ...state,
         playlists: state.playlists.filter(
-          (playlistItem) => playlistItem.id !== payload.playlistId
-        )
+          (playlistItem) => playlistItem._id !== payload.playlistId
+        ),
       };
 
     case "REMOVE_ALL_VIDEOS":
       return {
         ...state,
         playlists: state.playlists.map((playlist) =>
-          playlist.id === payload.playlistId
+          playlist._id === payload.playlistId
             ? { ...playlist, videos: [] }
             : playlist
-        )
+        ),
+      };
+
+    case "RESET_PLAYLISTS":
+      return {
+        ...state,
+        playlists: [],
       };
 
     default:
@@ -75,7 +87,7 @@ export const videosReducer = (state, { type, payload }) => {
 };
 
 const findCurrentPlaylist = (state, payload) =>
-  state.playlists.find((playlist) => playlist.id === payload.playlistId);
+  state.playlists.find((playlist) => playlist._id === payload.playlistId);
 
 const findIsPresentInPlaylist = (currentPlaylist, payload) =>
   currentPlaylist.videos.find(
@@ -86,15 +98,15 @@ const removeFromPlaylist = (state, { videoId, playlistId }) => {
   return {
     ...state,
     playlists: state.playlists.map((playlist) =>
-      playlist.id === playlistId
+      playlist._id === playlistId
         ? {
             ...playlist,
             videos: playlist.videos.filter(
               (playlistVideoId) => playlistVideoId !== videoId
-            )
+            ),
           }
         : playlist
-    )
+    ),
   };
 };
 
@@ -102,9 +114,9 @@ const addToPlaylist = (state, { videoId, playlistId }) => {
   return {
     ...state,
     playlists: state.playlists.map((playlist) =>
-      playlist.id === playlistId
+      playlist._id === playlistId
         ? { ...playlist, videos: [...playlist.videos, videoId] }
         : playlist
-    )
+    ),
   };
 };
