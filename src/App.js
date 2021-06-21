@@ -59,7 +59,7 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/video/:videoId" element={<VideoDetails />} />
+        <PrivateRoute path="/video/:videoId" element={<VideoDetails />} />
         <PrivateRoute path="/playlists" element={<Playlists />} />
         <PrivateRoute
           path="/playlists/:playlistId"
