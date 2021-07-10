@@ -25,7 +25,10 @@ export const Navbar = () => {
       )}
       <div className={` ${styles.flexRow} ${styles.widthFull}`}>
         <Link to="/" className={`${styles.logoContainer} ${styles.link}`}>
-          <span className={styles.logoText}>Home</span>
+          <img onClick={()=>{navigate("/")}}
+            src="https://res.cloudinary.com/akash29/image/upload/c_scale,h_60,w_60/v1625941960/cape-watch-app-logo_ueq003.png"
+            alt="logo"
+          />
         </Link>
 
         <div

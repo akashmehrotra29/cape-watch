@@ -11,7 +11,6 @@ import styles from "./PlaylistDetails.module.css";
 
 export const PlaylistDetails = () => {
   const { playlistId } = useParams();
-  console.log({ playlistId });
   const { playlists, dispatch } = useVideos();
 
   const playlist = getPlaylistById(playlistId, playlists);
