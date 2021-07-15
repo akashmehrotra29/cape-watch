@@ -25,7 +25,10 @@ export const Navbar = () => {
       )}
       <div className={` ${styles.flexRow} ${styles.widthFull}`}>
         <Link to="/" className={`${styles.logoContainer} ${styles.link}`}>
-          <img onClick={()=>{navigate("/")}}
+          <img
+            onClick={() => {
+              navigate("/");
+            }}
             src="https://res.cloudinary.com/akash29/image/upload/c_scale,h_60,w_60/v1625941960/cape-watch-app-logo_ueq003.png"
             alt="logo"
           />
@@ -43,7 +46,7 @@ export const Navbar = () => {
           </Link>
           <div className={`${styles.spaceHr}`}></div>
 
-          {user && (
+          {/* {user && (
             <div>
               <Link className={`${styles.link}`} to="/account">
                 Account
@@ -51,7 +54,8 @@ export const Navbar = () => {
             </div>
           )}
 
-          <div className={`${styles.spaceHr}`}></div>
+          <div className={`${styles.spaceHr}`}></div> */}
+
           <div className={`${styles.link}`} onClick={authHandler}>
             {user ? "Logout" : "Login"}
           </div>

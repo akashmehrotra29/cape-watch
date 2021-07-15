@@ -6,7 +6,7 @@ import styles from "./VideoCard.module.css";
 export const VideoCard = ({ videoId }) => {
   const { videos } = useVideos();
 
-  const { id, thumbnailURL, channelName, published_date, title, viewCount } =
+  const { id, thumbnailURL, channelName, publishedDate, title, viewCount } =
     getVideoDetailsById(videoId, videos);
 
   return (
@@ -19,7 +19,7 @@ export const VideoCard = ({ videoId }) => {
             <p id="channel-title">{channelName}</p>
             <div className="video-views">
               <p>{viewCount} views</p>
-              <p>{published_date}</p>
+              <p>{publishedDate}</p>
             </div>
           </div>
         </div>
