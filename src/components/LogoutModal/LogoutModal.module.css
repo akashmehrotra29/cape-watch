@@ -20,11 +20,11 @@
 }
 
 .modalInner > p {
-  color: #3c3c4399;
+  /* color: #3c3c4399; */
 }
 
 .modalButtonWrap {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
