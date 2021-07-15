@@ -1,4 +1,29 @@
-# Getting Started with Create React App
+# Capewatch
+A video library app with various functionalities to enhance the learning experience.
+
+Deployed App Link: [https://capewatch.netlify.app](https://capewatch.netlify.app)
+
+[Backend Repo](https://github.com/akashmehrotra29/cape-watch-backend/tree/development)
+
+---
+## Tech Stack
+- React JS 
+- Cape UI (own component library)
+- Express JS & Mongoose (in Backend)
+
+## Features
+
+- List of videos with all details
+- History of watched videos with a clear history option
+- Add and delete videos from playlists 
+- Default playlists for users (Liked Videos, Saved videos and Watch Later videos)
+- Option to create custom playlists
+- Authentication using JSON Web Token (JWT) with login and signup
+- Authentication persistence using local storage
+- Responsive design
+
+---
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
