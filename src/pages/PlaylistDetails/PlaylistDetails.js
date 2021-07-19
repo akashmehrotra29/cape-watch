@@ -62,10 +62,10 @@ export const PlaylistDetails = () => {
           <span className="material-icons-outlined">delete</span>
         </button>
       </span>
-      <ul>
+      <ul className={`${styles.videoCardContainer}`}>
         {playlist.videos.length !== 0 ? (
           playlist.videos.map((videoId) => (
-            <li key={videoId}>
+            <li key={videoId} className={`${styles.videoCard}`}>
               <VideoCard videoId={videoId} />
             </li>
           ))

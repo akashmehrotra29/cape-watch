@@ -6,7 +6,7 @@ export const PlaylistBrief = ({ playlist }) => {
   return (
     <div>
       <div className="horizontal-card-center">
-        <div className="horizontal-card">
+        <div className={`horizontal-card ${styles.horizontalCard}`}>
           <Link to={`/playlists/${playlist._id}`} className={`${styles.link}`}>
             <div className="thumbnail">
               {playlist.videos.length !== 0 &&
@@ -14,7 +14,7 @@ export const PlaylistBrief = ({ playlist }) => {
                   .slice(-1)
                   .map((videoId) => (
                     <VideoBriefCard key={videoId} videoId={videoId} />
-                  ))}{" "}
+                  ))}
             </div>
             <div className="product-description">
               <h2>

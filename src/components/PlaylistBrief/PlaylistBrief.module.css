@@ -3,3 +3,7 @@
   color: inherit;
   cursor: pointer;
 }
+
+.horizontalCard {
+  width: 15rem;
+}

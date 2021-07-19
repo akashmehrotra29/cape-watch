@@ -8,10 +8,24 @@
   margin-right: 0;
   font-weight: bold;
   text-align: center;
+  width: 15rem;
 }
 
 .link {
   text-decoration: none;
   color: white;
   cursor: pointer;
+}
+
+.videoCardContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+}
+
+.videoCard {
+  list-style: none;
+  width: 20rem;
+  margin: 1rem;
 }

@@ -26,7 +26,7 @@ export const DeleteModal = ({
         <div className={`${styles.modalButtonWrap}`}>
           <button
             onClick={() => setshowDeleteModal(false)}
-            className="btn btn-outlined btn-small"
+            className="btn btn-secondary"
           >
             Cancel
           </button>
@@ -40,7 +40,7 @@ export const DeleteModal = ({
                 setshowDeleteModal
               )
             }
-            className="btn btn-solid btn-small"
+            className="btn btn-primary"
           >
             Yes
           </button>
